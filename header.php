@@ -7,6 +7,8 @@
  * Text Book Rental Application
  **/
 
+require 'lib/db.php';
+
 session_start();
 
 /* Page Configuration */
@@ -44,9 +46,9 @@ $page['logged_in'] = isset($_SESSION['logged_in']) && $_SESSION['logged_in'];
             <li class="menu-text">CS422 Textbook Club</li>
             <?php if($page['logged_in']) { ?>
             <li>
-                <a href="#">Student Management</a>
+                <a href="students.php">Student Management</a>
             </li>
-            <li><a href="#">Book Management</a>
+            <li><a href="books.php">Book Management</a>
             </li>
             <li><a href="#">Reports</a>
                 <ul class="menu vertical">
