@@ -1,8 +1,6 @@
 <?php
 
-$servername = "cs422project.datamachine.net";
-$username = "bookclub";
-$password = "6DHEAirVEEM6Z4M!!";
+require_once "db_settings.php";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password);
