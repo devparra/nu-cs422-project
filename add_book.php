@@ -10,12 +10,15 @@
 /* Page Configuration */
 $page = Array();
 $page['subtitle'] = "Add Book";
+
+require_once "lib/db.php";
+
 if(isset($_POST['title'])) {
     AddBook($_POST['title'],
         $_POST['author'],
         $_POST['isbn'],
         $_POST['edition']);
-    header("http://cs422project.datamachine.net/books.php");
+    header("Location: http://cs422project.datamachine.net/books.php");
 } else {
 
     require "header.php"; ?>
@@ -63,6 +66,4 @@ if(isset($_POST['title'])) {
         </form>
     </div>
 </div>
-<?php }
-
-require_once "footer.php"; ?>
+<?php require_once "footer.php"; } ?>

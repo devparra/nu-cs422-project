@@ -74,3 +74,14 @@ function AddBook($title, $author, $isbn, $edition) {
     $stmt->bind_param("isss", $isbn, $title, $author, $edition);
     $result = $stmt->execute();
 }
+
+
+function AddStudent($name, $phone_number, $address) {
+    global $conn;
+
+    $sql = "INSERT INTO Student(Name, Phone_Number, Address) VALUES(?, ?, ?)";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("sss", $name, $phone_number, $address);
+    $result = $stmt->execute();
+}

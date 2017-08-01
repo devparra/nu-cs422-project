@@ -10,11 +10,14 @@
 /* Page Configuration */
 $page = Array();
 $page['subtitle'] = "Add Student";
-if(isset($_POST['title'])) {
+
+require_once("lib/db.php");
+
+if(isset($_POST['name'])) {
     AddStudent($_POST['name'],
         $_POST['phone_number'],
         $_POST['address']);
-    header("http://cs422project.datamachine.net/students.php");
+    header("Location: http://cs422project.datamachine.net/students.php");
 } else {
 
     require "header.php"; ?>
@@ -27,7 +30,7 @@ if(isset($_POST['title'])) {
                 <h1>Add Student</h1>
             </div>
         </div>
-        <form action="add_book.php" method="post">
+        <form action="add_student.php" method="post">
             <div class="row">
                 <div class="large-12 columns">
                     <label>Name
@@ -58,6 +61,7 @@ if(isset($_POST['title'])) {
         </form>
     </div>
 </div>
-<?php }
+<?php 
 
-require_once "footer.php"; ?>
+require_once "footer.php"; }
+?>

@@ -47,7 +47,7 @@ $page['subtitle'] = "Book List"
     </div>
     <div class="row">
         <div class="large-12 small-12 column float-right text-right">
-            <a href="add_book.php" class="button">Add Book</a>
+            <a href="add_student.php" class="button">Add Student</a>
         </div>
     </div>
 

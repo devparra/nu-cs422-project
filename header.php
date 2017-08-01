@@ -7,7 +7,8 @@
  * Text Book Rental Application
  **/
 
-require 'lib/db.php';
+require_once 'lib/db.php';
+
 
 session_start();
 
