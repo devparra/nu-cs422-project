@@ -29,6 +29,7 @@ $page['subtitle'] = "Book List"
                     <th>Edition</th>
                     <th>Copies</th>
                     <th>Available</th>
+                    <th></th>
                 </thead>
                 <tbody>
                     <?php foreach($books as $book) { ?>
@@ -39,6 +40,10 @@ $page['subtitle'] = "Book List"
                             <td><?=$book['Edition']?></td>
                             <td><a href="book_copies.php?book_id=<?=$book['Book_ID']?>"><?=$book['Copies']?></a></td>
                             <td><?=$book['Available']?></td>
+                            <td>
+                                <?php if($book['Available'] > 0) { ?><a href="checkout_book.php?book_id=<?=$book['Book_ID']?>" class="button small">Checkout</a><?php } ?>
+                                <?php if($book['Available'] < $book['Copies']) {?><a href="checkin_book.php?book_id=<?=$book['Book_ID']?>" class="alert button small">Check-in</a><?php } ?>
+                            </td>
                         </tr>
                     <?php }?>
                 </tbody>

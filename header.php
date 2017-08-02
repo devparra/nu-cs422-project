@@ -32,7 +32,9 @@ $page['logged_in'] = isset($_SESSION['logged_in']) && $_SESSION['logged_in'];
     <script src="js/vendor/jquery.js"></script>
     <script src="js/vendor/what-input.js"></script>
     <script src="js/vendor/foundation.js"></script>
-
+    <script src="js/vendor/foundation.js"></script>
+    <script src="js/vendor/jquery.dataTables.min.js"></script>
+    <script src="js/vendor/dataTables.foundation.min.js"></script>
 
     <link rel="stylesheet" href="css/app.css" />
     <script src="js/app.js"></script>
@@ -53,10 +55,8 @@ $page['logged_in'] = isset($_SESSION['logged_in']) && $_SESSION['logged_in'];
             </li>
             <li><a href="#">Reports</a>
                 <ul class="menu vertical">
-                    <li><a href="#">Late Book Report</a></li>
-                    <li><a href="#">Inventory Report</a></li>
-                    <li><a href="#">Membership Report</a></li>
-                    <li><a href="#">Transaction Report</a></li>
+                    <li><a href="late_book_report.php">Late Book Report</a></li>
+                    <li><a href="transactions_report.php">Transaction Report</a></li>
                 </ul>
             </li>
             <?php } ?>
