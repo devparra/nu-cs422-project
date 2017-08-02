@@ -37,7 +37,7 @@ $page['subtitle'] = "Book List"
                             <td><?=$book['Author']?></td>
                             <td><?=$book['ISBN']?></td>
                             <td><?=$book['Edition']?></td>
-                            <td><?=$book['Copies']?></td>
+                            <td><a href="book_copies.php?book_id=<?=$book['Book_ID']?>"><?=$book['Copies']?></a></td>
                             <td><?=$book['Available']?></td>
                         </tr>
                     <?php }?>

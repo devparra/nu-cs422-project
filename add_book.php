@@ -17,8 +17,10 @@ if(isset($_POST['title'])) {
     AddBook($_POST['title'],
         $_POST['author'],
         $_POST['isbn'],
-        $_POST['edition']);
-    header("Location: http://cs422project.datamachine.net/books.php");
+        $_POST['edition'],
+        $_POST['condition'],
+        $_POST['rental_fee']);
+    header("Location: /books.php");
 } else {
 
     require "header.php"; ?>
@@ -55,6 +57,23 @@ if(isset($_POST['title'])) {
                 <div class="large-4 columns">
                     <label>ISBN13
                         <input type="text" placeholder="ISBN 13" maxlength="13" name="isbn" required/>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-12 columns">
+                    <h4>Book Copy Details</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="large-10 columns">
+                    <label>Condition
+                        <input type="text" placeholder="New, Used, Damaged, Marked, Etc" name="condition" required/>
+                    </label>
+                </div>
+                <div class="large-2 columns">
+                    <label>Rental Fee
+                        <input type="text" placeholder="0.00"  name="rental_fee" required/>
                     </label>
                 </div>
             </div>

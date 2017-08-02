@@ -17,7 +17,7 @@ if(isset($_POST['name'])) {
     AddStudent($_POST['name'],
         $_POST['phone_number'],
         $_POST['address']);
-    header("Location: http://cs422project.datamachine.net/students.php");
+    header("Location: /students.php");
 } else {
 
     require "header.php"; ?>
