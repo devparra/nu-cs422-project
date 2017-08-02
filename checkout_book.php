@@ -67,7 +67,7 @@ if(isset($_POST['book_id'])) {
                 <div class="large-12 columns">
                     <label>Student Checking Out
                         <select name="student_id" required>
-                            <?php foreach($students as $student) { ?>
+                            <?php foreach($students as $student) { if(!$student['Deposit']) continue; ?>
                                 <option value="<?=$student['Student_ID']?>"><?=$student['Student_ID']?>: <?=$student['Name']?></option>
                             <?php } ?>
                         </select>
