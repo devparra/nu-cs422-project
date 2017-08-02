@@ -29,6 +29,7 @@ $page['subtitle'] = "Book List"
                     <th>Balance</th>
                     <th>Deposit Paid?</th>
                     <th>Books Checked Out</th>
+                    <th></th>
                 </thead>
                 <tbody>
                     <?php foreach($students as $student) { ?>
@@ -39,6 +40,13 @@ $page['subtitle'] = "Book List"
                             <td><?=$student['Balance']?></td>
                             <td><?=$student['Deposit']?"Y":"N"?></td>
                             <td><?=$student['Books_Out']?></td>
+                            <td>
+                                <?php if($student['Books_Out'] == 0 && $student['Deposit']) { ?>
+                                    <a href="student_quit.php?student_id=<?=$student['Student_ID']?>">Remove Student</a>
+                                <?php } else if(!$student['Deposit']) {?>
+                                    <a href="student_rejoin.php?student_id=<?=$student['Student_ID']?>">Rejoin Student</a>
+                                <?php } ?>
+                            </td>
                         </tr>
                     <?php }?>
                 </tbody>

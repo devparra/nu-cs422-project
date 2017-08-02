@@ -215,15 +215,56 @@ function GetLateCopies() {
                 ,GREATEST(0,DATEDIFF(NOW(), DATE_ADD(co.Check_Out_Date, INTERVAL co.Rental_Periods MONTH))) as Days_Late
                 ,Student.Student_ID
                 ,Student.Name
+                ,Book.Title
+                ,Book.ISBN
         FROM Book_Copy 
         JOIN Student_Book_Copy_Check_Out co ON co.Book_ID = Book_Copy.Book_ID AND co.Copy_No = Book_Copy.Copy_No AND co.Returned_Date IS NULL
         JOIN Student ON Student.Student_ID = co.Student_ID
+        JOIN Book ON Book.Book_ID = Book_Copy.Book_ID
         WHERE GREATEST(0,DATEDIFF(NOW(), DATE_ADD(co.Check_Out_Date, INTERVAL co.Rental_Periods MONTH))) > 0
         ORDER BY Book_Copy.Book_ID, Copy_No
     ";
 
     $stmt = $conn->prepare($sql);
 
+
+    if (!$stmt->execute()){
+        error_log ("MySQLi Error Message: ". $conn->error);
+        die($conn->error);
+    }
+
+    $results = $stmt->get_result();
+
+    if($results->num_rows > 0) {
+        return $results->fetch_all(MYSQLI_ASSOC);
+    } else {
+        return array();
+    }
+}
+
+function GetStudentCheckedOutBooks($student_id) {
+    global $conn;
+
+    $sql = "
+        SELECT	 Book_Copy.Book_ID
+                ,Book_Copy.Copy_No
+                ,Book_Copy.`Condition`
+                ,Book_Copy.Rental_Fee 
+                ,co.Check_Out_Date
+                ,co.Rental_Periods
+                ,DATE_ADD(co.Check_Out_Date, INTERVAL co.Rental_Periods MONTH) AS Due_Date
+                ,GREATEST(0,DATEDIFF(NOW(), DATE_ADD(co.Check_Out_Date, INTERVAL co.Rental_Periods MONTH))) as Days_Late
+                ,Student.Student_ID
+                ,Student.Name
+        FROM Book_Copy 
+        JOIN Student_Book_Copy_Check_Out co ON co.Book_ID = Book_Copy.Book_ID AND co.Copy_No = Book_Copy.Copy_No AND co.Returned_Date IS NULL
+        JOIN Student ON Student.Student_ID = co.Student_ID
+        WHERE Student.Student_ID = ?
+        ORDER BY Book_Copy.Book_ID, Copy_No
+    ";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $student_id);
 
     if (!$stmt->execute()){
         error_log ("MySQLi Error Message: ". $conn->error);
@@ -269,7 +310,7 @@ function GetStudents() {
 
     if($results->num_rows > 0) {
         foreach($results->fetch_all(MYSQLI_ASSOC) as $row) {
-            $row['Books_Out'] = 0; // TODO Function here to calculate
+            $row['Books_Out'] = count(GetStudentCheckedOutBooks($row['Student_ID']));
             $rows[] = $row;
         }
     }
@@ -327,6 +368,40 @@ function AddStudent($name, $phone_number, $address) {
     CreateTransaction($student_id, $amount, DEPOSIT_TRANS);
 }
 
+function StudentQuit($student_id) {
+    global $conn;
+
+    $amount = -300.00;
+
+    $sql = "UPDATE Student SET Balance = 0, Deposit = 0 WHERE Student_ID = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $student_id);
+    if (!$stmt->execute()){
+        error_log ("MySQLi Error Message: ". $conn->error);
+        die($conn->error);
+    }
+
+    CreateTransaction($student_id, $amount, DEPOSIT_TRANS);
+}
+
+function StudentRejoin($student_id) {
+    global $conn;
+
+    $amount = 300.00;
+
+    $sql = "UPDATE Student SET Balance = 300, Deposit = 1 WHERE Student_ID = ?";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $student_id);
+    if (!$stmt->execute()){
+        error_log ("MySQLi Error Message: ". $conn->error);
+        die($conn->error);
+    }
+
+    CreateTransaction($student_id, $amount, DEPOSIT_TRANS);
+}
+
 function CheckoutBook($book_id, $copy_no, $student_id, $rental_periods) {
     global $conn;
 
@@ -342,7 +417,7 @@ function CheckoutBook($book_id, $copy_no, $student_id, $rental_periods) {
 
     $copy = GetBookCopy($book_id, $copy_no);
 
-    CreateTransaction($student_id, $copy['Rental_Fee'], RENTAL_TRANS, $book_id, $copy_no);
+    CreateTransaction($student_id, $copy['Rental_Fee'] * $rental_periods, RENTAL_TRANS, $book_id, $copy_no);
 }
 
 function Checkin_Book($book_id, $copy_no) {

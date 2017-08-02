@@ -19,7 +19,7 @@ $page['subtitle'] = "Book List"
     $books = GetBooks();
 ?>
 
-    <div class="row">
+    <div class="row expanded ">
         <div class="large-12 small-12 column">
             <table>
                 <thead>
@@ -50,7 +50,7 @@ $page['subtitle'] = "Book List"
             </table>
         </div>
     </div>
-    <div class="row">
+    <div class="row expanded">
         <div class="large-12 small-12 column float-right text-right">
             <a href="add_book.php" class="button">Add Book</a>
         </div>

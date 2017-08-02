@@ -43,9 +43,10 @@ $page['subtitle'] = "Book List"
                     <th>Copy Number</th>
                     <th>Condition</th>
                     <th>Rental Fee</th>
+                    <?php /* <!-- Would be great to add this but it's beyond the scope/spec and we don't have time -->
                     <th>Times Rented</th>
                     <th>Currently Renting</th>
-                    <th>Due Back</th>
+                    <th>Due Back</th> */ ?>
                 </thead>
                 <tbody>
                     <?php foreach($book_copies as $copy) { ?>
@@ -53,9 +54,11 @@ $page['subtitle'] = "Book List"
                             <td><?=$copy['Copy_No']?></td>
                             <td><?=$copy['Condition']?></td>
                             <td><?=$copy['Rental_Fee']?></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                            <?php /*
+                            <td><?=$copy['Times_Rented']?></td>
+                            <td><?=$copy['Currently_Renting']?'Y':'N'?></td>
+                            <td><?=$copy['Due_Date']?></td>>
+                            */ ?>
                         </tr>
                     <?php }?>
                 </tbody>
