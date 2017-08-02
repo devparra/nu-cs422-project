@@ -25,15 +25,9 @@ $page['subtitle'] = "Home Page"
         </div>
     </div>
 
-<?php } else { ?>
-
-    <div class="row">
-        <div class="large-12 small-12 column">
-        Home Page Content Here.
-        </div>
-    </div>
-
-<?php } ?>
+<?php } else {
+    header("Location: /students.php"); // no homepage needed, just send to students.
+} ?>
 
 
 <?php require_once "footer.php"; ?>
