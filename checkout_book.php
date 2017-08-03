@@ -77,9 +77,17 @@ if(isset($_POST['book_id'])) {
             <div class="row">
                 <div class="large-4 columns">
                     <label>Months to Rent
-                        <input type="number" min="1" max="12" placeholder="# Months" name="rental_periods" required>
+                        <input type="number" min="1" max="12" placeholder="# Months" id="rental_periods" name="rental_periods" required value="1">
                     </label>
                 </div>
+<!--		
+		<div class="large-2 columns">
+                	<label>Rental Fee<h4 id="rental_fee">x $<?=$copy['Rental_Fee']?></h4></label>
+		</div>
+		<div class="large-2 columns">
+                	<label>Total Due<h4 id="total_due">$<?=$copy['Rental_Fee']?></h4></label>
+		</div>
+-->
                 <div class="large-4 columns">
                     <input type="hidden" name="book_id" value="<?=$book['Book_ID']?>">
                     <button class="button float-right" name="Send" type="submit">Checkout Book</button>
